@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Velaluna — Luxury Scented Candles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/framer-motion@11/dist/framer-motion.dom.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    :root {
+      --bg-base: #121212;
+      --bg-surface: #1a1a1a;
+      --bg-card: #1e1c1a;
+      --cream: #fbf7f0;
+      --warm-gray: #e6dfd3;
+      --amber: #ffb84d;
+      --amber-dim: rgba(255,184,77,0.12);
+      --amber-glow: rgba(255,184,77,0.06);
+      --text-primary: #f5efe6;
+      --text-secondary: #9e9488;
+      --text-muted: #5a5450;
+      --border-subtle: rgba(255,255,255,0.05);
+      --border-warm: rgba(255,184,77,0.2);
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background-color: rgba(255,184,77,0.25);
+      color: var(--cream);
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,184,77,0.3); border-radius: 2px; }
+
+    /* Hide scrollbar for carousel */
+    .carousel-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .carousel-scroll::-webkit-scrollbar { display: none; }
+
+    /* Typography */
+    .font-serif { font-family: var(--font-serif); }
+    .font-sans { font-family: var(--font-sans); }
+
+    /* Premium easing */
+    .ease-premium { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* Candle glow animation */
+    @keyframes breathe {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.65; transform: scale(1.08); }
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 0.9; transform: scaleY(1) translateX(-50%); }
+      25% { opacity: 0.7; transform: scaleY(0.95) translateX(-48%); }
+      75% { opacity: 0.85; transform: scaleY(1.02) translateX(-52%); }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOutRight {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .candle-breathe { animation: breathe 4s ease-in-out infinite; }
+    .candle-drift { animation: drift 6s ease-in-out infinite; }
+    .candle-flicker { animation: flicker 2.5s ease-in-out infinite; }
+
+    .panel-enter { animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .panel-exit { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 1, 1) forwards; }
+    .overlay-enter { animation: fadeIn 0.3s ease forwards; }
+
+    /* Floating label inputs */
+    .float-group { position: relative; }
+    .float-input {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 300;
+      padding: 20px 16px 8px;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  background 0.3s ease,
+                  box-shadow 0.3s ease;
+      letter-spacing: 0.01em;
+    }
+    .float-input:focus {
+      border-color: rgba(255,184,77,0.35);
+      background: rgba(255,184,77,0.04);
+      box-shadow: 0 0 0 3px rgba(255,184,77,0.06), inset 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .float-label {
+      position: absolute;
+      left: 16px;
+      top: 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .float-input:focus ~ .float-label,
+    .float-input:not(:placeholder-shown) ~ .float-label {
+      top: 6px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--amber);
+    }
+
+    /* Card hover effects */
+    .product-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,184,77,0.06) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    .product-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(255,184,77,0.22);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,184,77,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .product-card:hover::before { opacity: 1; }
+
+    /* Nav */
+    .nav-link {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-weight: 400;
+    }
+    .nav-link:hover { color: var(--cream); }
+
+    /* Payment card */
+    .pay-card {
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(255,255,255,0.02);
+      position: relative;
+      overflow: hidden;
+    }
+    .pay-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,184,77,0.08) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .pay-card:hover {
+      border-color: rgba(255,184,77,0.2);
+      background: rgba(255,184,77,0.04);
+      transform: translateY(-1px);
+    }
+    .pay-card.active {
+      border-color: var(--amber);
+      background: rgba(255,184,77,0.08);
+      box-shadow: 0 0 20px rgba(255,184,77,0.15), 0 0 0 1px rgba(255,184,77,0.3);
+      transform: scale(1.02);
+    }
+    .pay-card.active::after { opacity: 1; }
+
+    /* CTA Button */
+    .btn-primary {
+      background: linear-gradient(135deg, #ffb84d 0%, #f0a030 100%);
+      color: #1a1200;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-primary:hover { box-shadow: 0 8px 30px rgba(255,184,77,0.4); transform: translateY(-1px); }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:active { transform: translateY(0px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--cream);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* Section spacing */
+    .section { padding: 120px 0; }
+
+    /* Eyebrow label */
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-family: var(--font-sans);
+      font-weight: 400;
+    }
+
+    /* Divider */
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    }
+
+    /* Success state */
+    @keyframes checkPop {
+      0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+      60% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .check-anim { animation: checkPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* Responsive grid */
+    @media (min-width: 1024px) {
+      .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    }
+    @media (max-width: 1023px) {
+      .product-grid-mobile {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding-bottom: 16px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .product-card-mobile {
+        flex: 0 0 82vw;
+        max-width: 340px;
+        scroll-snap-align: start;
+      }
+    }
+
+    /* Noise texture overlay */
+    .noise::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* Marquee */
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .marquee-inner { animation: marquee 22s linear infinite; white-space: nowrap; display: flex; }
+
+    /* Toast */
+    @keyframes toastIn {
+      from { transform: translateY(20px) translateX(-50%); opacity: 0; }
+      to { transform: translateY(0) translateX(-50%); opacity: 1; }
+    }
+    .toast { animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* Scroll indicator */
+    @keyframes scrollPulse {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
+    .scroll-indicator { animation: scrollPulse 2s ease-in-out infinite; }
+  </style>
+</head>
+<body class="noise">
+  <div id="root"></div>
+
+  <script>
+  (() => {
+    const { useState, useEffect, useRef, useCallback } = React;
+    const { motion, AnimatePresence, useInView, useScroll, useTransform } = window.MotionDom || window.Motion || {};
+
+    // ─── Data ────────────────────────────────────────────────────────────────
+    const PRODUCTS = [
+      {
+        id: 1,
+        name: "Aura of Midnight",
+        arabic: "هالة منتصف الليل",
+        notes: "Smoked Oud & Amber",
+        price: 850,
+        burnTime: "55 hrs",
+        weight: "220g",
+        accent: "#3d2a1a",
+        accentLight: "rgba(120,60,20,0.15)",
+        emoji: "🕯",
+        badge: "Bestseller",
+        desc: "A shroud of ancient oud smoke folded into warm amber resin. Meditative and uncompromising.",
+      },
+      {
+        id: 2,
+        name: "Desert Rose",
+        arabic: "وردة الصحراء",
+        notes: "Velvet Rose & Sandalwood",
+        price: 920,
+        burnTime: "60 hrs",
+        weight: "240g",
+        accent: "#2a1a20",
+        accentLight: "rgba(120,30,60,0.12)",
+        emoji: "🌹",
+        badge: "New",
+        desc: "Sun-warmed petals over a bed of polished sandalwood. Opulent without being overwrought.",
+      },
+      {
+        id: 3,
+        name: "Solstice Glow",
+        arabic: "بريق الانقلاب",
+        notes: "Vanilla Bean & Cedarwood",
+        price: 890,
+        burnTime: "50 hrs",
+        weight: "200g",
+        accent: "#1e1f10",
+        accentLight: "rgba(80,90,20,0.12)",
+        emoji: "✨",
+        badge: "Limited",
+        desc: "The exact warmth of late afternoon light. Vanilla absolute grounded by pencil-shaving cedar.",
+      },
+    ];
+
+    const PAYMENT_METHODS = [
+      { id: "vodafone", label: "Vodafone Cash", icon: "💳", sub: "Pay via mobile wallet" },
+      { id: "instapay", label: "InstaPay", icon: "⚡", sub: "Instant bank transfer" },
+      { id: "cod", label: "Cash on Delivery", icon: "📦", sub: "Pay when you receive" },
+    ];
+
+    // ─── Icons (inline SVG via Lucide) ───────────────────────────────────────
+    const Icon = ({ name, size = 18, color = "currentColor", strokeWidth = 1.5 }) => {
+      const icons = {
+        x: `<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>`,
+        shoppingBag: `<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>`,
+        check: `<polyline points="20,6 9,17 4,12"/>`,
+        arrowRight: `<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>`,
+        flame: `<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>`,
+        sparkles: `<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>`,
+        instagram: `<rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>`,
+        music2: `<circle cx="9" cy="18" r="5"/><circle cx="19" cy="14" r="5"/><polyline points="14,14 9,4"/><line x1="14" y1="14" x2="19" y2="4"/>`,
+        messageCircle: `<path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/>`,
+        minus: `<line x1="5" y1="12" x2="19" y2="12"/>`,
+        plus: `<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>`,
+        chevronDown: `<polyline points="6 9 12 15 18 9"/>`,
+        send: `<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>`,
+      };
+      return React.createElement('svg', {
+        xmlns: "http://www.w3.org/2000/svg",
+        width: size, height: size,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: color,
+        strokeWidth,
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        dangerouslySetInnerHTML: { __html: icons[name] || '' },
+        style: { flexShrink: 0 }
+      });
+    };
+
+    // ─── Candle SVG ───────────────────────────────────────────────────────────
+    const CandleSVG = () => React.createElement('div', { className: 'candle-drift', style: { position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' } },
+      React.createElement('svg', { viewBox: "0 0 160 280", xmlns: "http://www.w3.org/2000/svg", style: { width: '100%', height: '100%', maxHeight: '340px', filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.8))' } },
+        // flame glow
+        React.createElement('defs', null,
+          React.createElement('radialGradient', { id: 'flameGlow', cx: '50%', cy: '80%', r: '50%' },
+            React.createElement('stop', { offset: '0%', stopColor: '#ffb84d', stopOpacity: '0.8' }),
+            React.createElement('stop', { offset: '100%', stopColor: '#ff6b00', stopOpacity: '0' }),
+          ),
+          React.createElement('radialGradient', { id: 'bodyGrad', cx: '30%', cy: '0%', r: '100%' },
+            React.createElement('stop', { offset: '0%', stopColor: '#3a2f26' }),
+            React.createElement('stop', { offset: '100%', stopColor: '#1c1612' }),
+          ),
+          React.createElement('radialGradient', { id: 'flameInner', cx: '50%', cy: '60%', r: '50%' },
+            React.createElement('stop', { offset: '0%', stopColor: '#fff7e6' }),
+            React.createElement('stop', { offset: '40%', stopColor: '#ffcc70' }),
+            React.createElement('stop', { offset: '100%', stopColor: '#ff8c00', stopOpacity: '0' }),
+          ),
+          React.createElement('filter', { id: 'blur' },
+            React.createElement('feGaussianBlur', { stdDeviation: '4' })
+          )
+        ),
+        // flame ambient
+        React.createElement('ellipse', { cx: '80', cy: '38', rx: '22', ry: '28', fill: 'url(#flameGlow)', filter: 'url(#blur)', style: { animation: 'breathe 3s ease-in-out infinite' } }),
+        // label band
+        React.createElement('rect', { x: '30', y: '90', width: '100', height: '140', rx: '6', fill: '#1a1410' }),
+        React.createElement('rect', { x: '30', y: '90', width: '100', height: '140', rx: '6', fill: 'url(#bodyGrad)', opacity: '0.6' }),
+        // wax body
+        React.createElement('rect', { x: '32', y: '60', width: '96', height: '170', rx: '8', fill: 'url(#bodyGrad)' }),
+        React.createElement('rect', { x: '32', y: '60', width: '96', height: '170', rx: '8', fill: 'none', stroke: 'rgba(255,220,150,0.08)', strokeWidth: '1' }),
+        // top wax pool
+        React.createElement('ellipse', { cx: '80', cy: '62', rx: '48', ry: '10', fill: '#2a2018' }),
+        React.createElement('ellipse', { cx: '80', cy: '62', rx: '30', ry: '5', fill: '#3d2f20', opacity: '0.7' }),
+        // label text area
+        React.createElement('rect', { x: '42', y: '110', width: '76', height: '80', rx: '4', fill: 'rgba(255,245,230,0.04)', stroke: 'rgba(255,220,150,0.1)', strokeWidth: '0.5' }),
+        // V text
+        React.createElement('text', { x: '80', y: '145', textAnchor: 'middle', fontFamily: 'Playfair Display, serif', fontSize: '22', fontWeight: '400', fill: 'rgba(255,235,200,0.7)', letterSpacing: '2' }, 'V'),
+        React.createElement('text', { x: '80', y: '162', textAnchor: 'middle', fontFamily: 'DM Sans, sans-serif', fontSize: '6.5', fontWeight: '300', fill: 'rgba(255,235,200,0.4)', letterSpacing: '5' }, 'VELALUNA'),
+        React.createElement('text', { x: '80', y: '178', textAnchor: 'middle', fontFamily: 'DM Sans, sans-serif', fontSize: '5', fontWeight: '300', fill: 'rgba(255,200,100,0.35)', letterSpacing: '2' }, 'LUXURY SCENTED'),
+        // base / jar bottom
+        React.createElement('rect', { x: '26', y: '228', width: '108', height: '14', rx: '4', fill: '#111009' }),
+        React.createElement('rect', { x: '20', y: '240', width: '120', height: '8', rx: '4', fill: '#0d0c08' }),
+        // highlight
+        React.createElement('rect', { x: '36', y: '65', width: '6', height: '150', rx: '3', fill: 'rgba(255,240,200,0.05)' }),
+        // wick
+        React.createElement('line', { x1: '80', y1: '55', x2: '80', y2: '65', stroke: '#3a2a10', strokeWidth: '1.5', strokeLinecap: 'round' }),
+        // flame outer
+        React.createElement('ellipse', { cx: '80', cy: '38', rx: '9', ry: '18', fill: 'url(#flameInner)', style: { animation: 'flicker 2.5s ease-in-out infinite', transformOrigin: '80px 55px' } }),
+        // flame core
+        React.createElement('ellipse', { cx: '80', cy: '42', rx: '4', ry: '8', fill: '#fff8e7', opacity: '0.9', style: { animation: 'flicker 2s ease-in-out infinite 0.3s', transformOrigin: '80px 55px' } }),
+      )
+    );
+
+    // ─── Navbar ───────────────────────────────────────────────────────────────
+    const Navbar = ({ cartCount, onCartOpen }) => {
+      const [scrolled, setScrolled] = useState(false);
+      useEffect(() => {
+        const fn = () => setScrolled(window.scrollY > 60);
+        window.addEventListener('scroll', fn, { passive: true });
+        return () => window.removeEventListener('scroll', fn);
+      }, []);
+
+      return React.createElement('nav', {
+        style: {
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+          padding: '20px 40px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+          background: scrolled ? 'rgba(18,18,18,0.85)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px) saturate(1.5)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.04)' : '1px solid transparent',
+        }
+      },
+        // Left nav links
+        React.createElement('div', { style: { display: 'flex', gap: '32px' } },
+          ['Collection', 'About', 'Ritual'].map(l =>
+            React.createElement('a', { key: l, href: '#', className: 'nav-link' }, l)
+          )
+        ),
+        // Logo
+        React.createElement('div', { style: { position: 'absolute', left: '50%', transform: 'translateX(-50%)' } },
+          React.createElement('span', {
+            style: { fontFamily: 'Playfair Display, serif', fontSize: '18px', fontWeight: '400', letterSpacing: '0.15em', color: 'var(--cream)', textDecoration: 'none' }
+          }, 'Velaluna')
+        ),
+        // Right
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '24px' } },
+          React.createElement('a', { href: '#', className: 'nav-link' }, 'Contact'),
+          React.createElement('button', {
+            onClick: onCartOpen,
+            style: {
+              position: 'relative', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
+              borderRadius: '50%', width: '38px', height: '38px', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'all 0.3s ease', color: 'var(--cream)'
+            },
+            onMouseEnter: e => { e.currentTarget.style.borderColor = 'rgba(255,184,77,0.4)'; e.currentTarget.style.background = 'rgba(255,184,77,0.08)'; },
+            onMouseLeave: e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; },
+          },
+            React.createElement(Icon, { name: 'shoppingBag', size: 16 }),
+            cartCount > 0 && React.createElement('span', {
+              style: {
+                position: 'absolute', top: '-4px', right: '-4px', background: 'var(--amber)',
+                color: '#1a1200', fontSize: '9px', fontWeight: '600', borderRadius: '50%',
+                width: '16px', height: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: 'DM Sans, sans-serif'
+              }
+            }, cartCount)
+          )
+        )
+      );
+    };
+
+    // ─── Hero ─────────────────────────────────────────────────────────────────
+    const Hero = ({ onShopClick }) => {
+      const words = ["شموع", "عطرية", "فاخرة", "—", "Luxury", "Scented", "Candles"];
+      const [visible, setVisible] = useState([]);
+
+      useEffect(() => {
+        words.forEach((_, i) => {
+          setTimeout(() => setVisible(v => [...v, i]), 200 + i * 100);
+        });
+      }, []);
+
+      return React.createElement('section', {
+        style: {
+          minHeight: '100vh', position: 'relative', overflow: 'hidden',
+          display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center',
+          padding: '0 60px', gap: '40px',
+        }
+      },
+        // Background glow
+        React.createElement('div', {
+          className: 'candle-breathe',
+          style: {
+            position: 'absolute', top: '40%', left: '55%', transform: 'translate(-50%, -50%)',
+            width: '600px', height: '600px',
+            background: 'radial-gradient(ellipse, rgba(255,184,77,0.12) 0%, rgba(255,120,30,0.06) 35%, transparent 70%)',
+            filter: 'blur(60px)', pointerEvents: 'none', zIndex: 0,
+          }
+        }),
+        // Second ambient glow
+        React.createElement('div', {
+          style: {
+            position: 'absolute', bottom: '10%', left: '10%',
+            width: '300px', height: '300px',
+            background: 'radial-gradient(ellipse, rgba(255,184,77,0.05) 0%, transparent 70%)',
+            filter: 'blur(40px)', pointerEvents: 'none', zIndex: 0,
+            animation: 'breathe 6s ease-in-out infinite 2s'
+          }
+        }),
+
+        // Left column — text
+        React.createElement('div', { style: { position: 'relative', zIndex: 1, paddingTop: '80px' } },
+          React.createElement('p', { className: 'eyebrow', style: { marginBottom: '24px', opacity: visible.length > 0 ? 1 : 0, transition: 'opacity 0.6s ease', transitionDelay: '0s' } },
+            'Est. Cairo, 2024'
+          ),
+          React.createElement('h1', {
+            style: {
+              fontFamily: 'Playfair Display, serif', fontSize: 'clamp(36px, 5vw, 72px)',
+              fontWeight: '400', lineHeight: '1.1', letterSpacing: '-0.01em',
+              color: 'var(--cream)', marginBottom: '32px',
+            }
+          },
+            words.map((word, i) => React.createElement('span', {
+              key: i,
+              style: {
+                display: 'inline-block',
+                marginRight: word === '—' ? '16px' : '12px',
+                marginBottom: '4px',
+                opacity: visible.includes(i) ? 1 : 0,
+                transform: visible.includes(i) ? 'translateY(0)' : 'translateY(24px)',
+                transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+                color: word === '—' ? 'rgba(255,184,77,0.5)' : 'var(--cream)',
+                fontStyle: ['شموع','عطرية','فاخرة'].includes(word) ? 'italic' : 'normal',
+              }
+            }, word))
+          ),
+          React.createElement('p', {
+            style: {
+              fontFamily: 'DM Sans, sans-serif', fontWeight: '300',
+              fontSize: '15px', lineHeight: '1.8', color: 'var(--text-secondary)',
+              maxWidth: '420px', marginBottom: '48px',
+              opacity: visible.length >= words.length ? 1 : 0,
+              transform: visible.length >= words.length ? 'translateY(0)' : 'translateY(16px)',
+              transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            }
+          },
+            'Hand-poured in small batches. Each fragrance is an architecture — a deliberate sequence of notes designed to transform the air around you.'
+          ),
+          React.createElement('div', {
+            style: {
+              display: 'flex', gap: '16px', alignItems: 'center',
+              opacity: visible.length >= words.length ? 1 : 0,
+              transition: 'opacity 1s ease 0.8s',
+            }
+          },
+            React.createElement('button', {
+              className: 'btn-primary',
+              onClick: onShopClick,
+            }, 'Explore the Collection'),
+            React.createElement('button', { className: 'btn-ghost' }, 'Our Story')
+          ),
+
+          // Stats
+          React.createElement('div', {
+            style: {
+              display: 'flex', gap: '40px', marginTop: '64px', paddingTop: '40px',
+              borderTop: '1px solid rgba(255,255,255,0.04)',
+              opacity: visible.length >= words.length ? 1 : 0,
+              transition: 'opacity 1s ease 1s',
+            }
+          },
+            [['03', 'Fragrances'], ['100%', 'Natural Wax'], ['55+', 'Burn Hours']].map(([n, l]) =>
+              React.createElement('div', { key: l },
+                React.createElement('div', {
+                  style: { fontFamily: 'Playfair Display, serif', fontSize: '28px', fontWeight: '400', color: 'var(--cream)', letterSpacing: '-0.02em' }
+                }, n),
+                React.createElement('div', {
+                  style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginTop: '4px' }
+                }, l)
+              )
+            )
+          )
+        ),
+
+        // Right column — candle
+        React.createElement('div', {
+          style: {
+            position: 'relative', zIndex: 1, height: '560px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            opacity: visible.length >= words.length ? 1 : 0,
+            transition: 'opacity 1s ease 0.5s',
+          }
+        },
+          // Circular glow behind candle
+          React.createElement('div', {
+            className: 'candle-breathe',
+            style: {
+              position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+              width: '340px', height: '340px',
+              background: 'radial-gradient(ellipse, rgba(255,184,77,0.18) 0%, rgba(255,140,40,0.08) 40%, transparent 70%)',
+              filter: 'blur(40px)', borderRadius: '50%',
+            }
+          }),
+          React.createElement('div', { style: { width: '220px', height: '380px', position: 'relative', zIndex: 1 } },
+            React.createElement(CandleSVG)
+          ),
+          // Scroll indicator
+          React.createElement('div', {
+            className: 'scroll-indicator',
+            style: {
+              position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
+              color: 'var(--text-muted)',
+            }
+          },
+            React.createElement(Icon, { name: 'chevronDown', size: 16 })
+          )
+        ),
+
+        // Mobile layout override
+        React.createElement('style', null, `
+          @media (max-width: 768px) {
+            section:first-of-type { grid-template-columns: 1fr !important; padding: 80px 24px 40px !important; }
+          }
+        `)
+      );
+    };
+
+    // ─── Marquee ──────────────────────────────────────────────────────────────
+    const MarqueeBand = () => {
+      const items = ['Smoked Oud', 'Velvet Rose', 'Vanilla Bean', 'Amber Resin', 'Sandalwood', 'Cedarwood', 'Incense Smoke'];
+      const repeated = [...items, ...items];
+      return React.createElement('div', {
+        style: {
+          overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)',
+          padding: '20px 0', background: 'rgba(255,255,255,0.01)'
+        }
+      },
+        React.createElement('div', { className: 'marquee-inner' },
+          repeated.map((item, i) =>
+            React.createElement('span', { key: i, style: { display: 'inline-flex', alignItems: 'center', gap: '20px', padding: '0 20px' } },
+              React.createElement('span', {
+                style: { fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontSize: '14px', color: 'var(--text-muted)', letterSpacing: '0.05em', whiteSpace: 'nowrap' }
+              }, item),
+              React.createElement('span', { style: { color: 'rgba(255,184,77,0.4)', fontSize: '10px' } }, '✦')
+            )
+          )
+        )
+      );
+    };
+
+    // ─── Product Card ─────────────────────────────────────────────────────────
+    const ProductCard = ({ product, onAddToCart, isMobile }) => {
+      const [hovered, setHovered] = useState(false);
+      const [adding, setAdding] = useState(false);
+
+      const handleAdd = (e) => {
+        e.stopPropagation();
+        setAdding(true);
+        setTimeout(() => { setAdding(false); onAddToCart(product); }, 500);
+      };
+
+      return React.createElement('div', {
+        className: `product-card ${isMobile ? 'product-card-mobile' : ''}`,
+        onMouseEnter: () => setHovered(true),
+        onMouseLeave: () => setHovered(false),
+        style: { minHeight: '480px', display: 'flex', flexDirection: 'column' }
+      },
+        // Inner glow accent
+        React.createElement('div', {
+          style: {
+            position: 'absolute', inset: 0, borderRadius: '16px',
+            background: `radial-gradient(ellipse at 50% 0%, ${product.accentLight} 0%, transparent 60%)`,
+            opacity: hovered ? 1 : 0.4, transition: 'opacity 0.5s ease', pointerEvents: 'none'
+          }
+        }),
+
+        // Top — candle visual area
+        React.createElement('div', {
+          style: {
+            height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            position: 'relative', background: `linear-gradient(180deg, ${product.accentLight} 0%, transparent 100%)`,
+            borderBottom: '1px solid rgba(255,255,255,0.04)',
+          }
+        },
+          // Ambient glow
+          React.createElement('div', {
+            style: {
+              position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+              width: '160px', height: '160px',
+              background: 'radial-gradient(ellipse, rgba(255,184,77,0.12) 0%, transparent 70%)',
+              filter: 'blur(20px)', animation: 'breathe 4s ease-in-out infinite',
+            }
+          }),
+          React.createElement('div', { style: { width: '90px', height: '160px', position: 'relative', zIndex: 1 } },
+            React.createElement(CandleSVG)
+          ),
+          // Badge
+          React.createElement('div', {
+            style: {
+              position: 'absolute', top: '16px', right: '16px',
+              background: 'rgba(255,184,77,0.12)', border: '1px solid rgba(255,184,77,0.2)',
+              borderRadius: '20px', padding: '4px 12px',
+              fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'var(--amber)', fontFamily: 'DM Sans, sans-serif', fontWeight: '400',
+            }
+          }, product.badge)
+        ),
+
+        // Content
+        React.createElement('div', { style: { padding: '28px 28px 0', flex: 1, display: 'flex', flexDirection: 'column' } },
+          React.createElement('p', { style: { fontSize: '11px', letterSpacing: '0.15em', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px', fontFamily: 'DM Sans, sans-serif' } },
+            product.notes
+          ),
+          React.createElement('h3', {
+            style: {
+              fontFamily: 'Playfair Display, serif', fontSize: '22px', fontWeight: '400',
+              color: 'var(--cream)', marginBottom: '4px', lineHeight: '1.2',
+              transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
+              transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+            }
+          }, product.name),
+          React.createElement('p', {
+            style: { fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontSize: '13px', color: 'var(--text-muted)', marginBottom: '16px' }
+          }, product.arabic),
+          React.createElement('p', {
+            style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '13px', lineHeight: '1.7', color: 'var(--text-secondary)', marginBottom: '24px', flex: 1 }
+          }, product.desc),
+
+          // Meta details
+          React.createElement('div', {
+            style: { display: 'flex', gap: '16px', marginBottom: '24px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.04)' }
+          },
+            [[Icon, 'flame', product.burnTime], [Icon, 'sparkles', product.weight]].map(([Ico, ico, val], i) =>
+              React.createElement('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: '6px' } },
+                React.createElement(Icon, { name: ico, size: 13, color: 'var(--text-muted)' }),
+                React.createElement('span', { style: { fontSize: '11px', color: 'var(--text-muted)', letterSpacing: '0.08em' } }, val)
+              )
+            )
+          )
+        ),
+
+        // Footer
+        React.createElement('div', {
+          style: { padding: '0 28px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
+        },
+          React.createElement('div', null,
+            React.createElement('div', { style: { fontSize: '10px', letterSpacing: '0.15em', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' } }, 'Price'),
+            React.createElement('div', { style: { fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: '400', color: 'var(--cream)' } },
+              React.createElement('span', { style: { fontSize: '14px', verticalAlign: 'super', marginRight: '2px', color: 'var(--text-secondary)' } }, 'EGP'),
+              product.price.toLocaleString()
+            )
+          ),
+          React.createElement('button', {
+            onClick: handleAdd,
+            style: {
+              background: adding ? 'rgba(255,184,77,0.15)' : 'rgba(255,255,255,0.04)',
+              border: `1px solid ${adding ? 'rgba(255,184,77,0.4)' : 'rgba(255,255,255,0.08)'}`,
+              borderRadius: '6px', padding: '10px 20px', cursor: 'pointer',
+              color: adding ? 'var(--amber)' : 'var(--text-secondary)',
+              fontFamily: 'DM Sans, sans-serif', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase',
+              transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+              display: 'flex', alignItems: 'center', gap: '8px',
+            },
+            onMouseEnter: e => { if (!adding) { e.currentTarget.style.borderColor = 'rgba(255,184,77,0.3)'; e.currentTarget.style.color = 'var(--cream)'; } },
+            onMouseLeave: e => { if (!adding) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = 'var(--text-secondary)'; } },
+          },
+            adding ? React.createElement(Icon, { name: 'check', size: 14, color: 'var(--amber)' }) : React.createElement(Icon, { name: 'plus', size: 14 }),
+            adding ? 'Added' : 'Add to Cart'
+          )
+        )
+      );
+    };
+
+    // ─── Products Section ─────────────────────────────────────────────────────
+    const ProductsSection = ({ onAddToCart }) => {
+      const [isMobile, setIsMobile] = useState(false);
+      useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 1024);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+      }, []);
+
+      return React.createElement('section', { id: 'collection', className: 'section', style: { padding: '120px 60px' } },
+        // Header
+        React.createElement('div', { style: { marginBottom: '64px' } },
+          React.createElement('p', { className: 'eyebrow', style: { marginBottom: '16px' } }, 'The Collection'),
+          React.createElement('div', { style: { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' } },
+            React.createElement('h2', {
+              style: { fontFamily: 'Playfair Display, serif', fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: '400', color: 'var(--cream)', lineHeight: '1.1', maxWidth: '500px' }
+            }, 'Three Candles. Three Worlds.'),
+            React.createElement('p', {
+              style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '14px', color: 'var(--text-secondary)', maxWidth: '320px', lineHeight: '1.7', textAlign: 'right' }
+            }, 'Each fragrance is developed over months — hand-poured in small batches, never mass-produced.')
+          )
+        ),
+
+        // Cards
+        isMobile
+          ? React.createElement('div', { className: 'product-grid-mobile carousel-scroll', style: { paddingBottom: '8px' } },
+              PRODUCTS.map(p => React.createElement(ProductCard, { key: p.id, product: p, onAddToCart, isMobile: true }))
+            )
+          : React.createElement('div', { className: 'product-grid' },
+              PRODUCTS.map(p => React.createElement(ProductCard, { key: p.id, product: p, onAddToCart, isMobile: false }))
+            ),
+
+        isMobile && React.createElement('p', {
+          style: { textAlign: 'center', marginTop: '20px', fontSize: '11px', letterSpacing: '0.15em', color: 'var(--text-muted)', textTransform: 'uppercase' }
+        }, '← Swipe to explore →')
+      );
+    };
+
+    // ─── Checkout Panel ───────────────────────────────────────────────────────
+    const CheckoutPanel = ({ cartItems, onClose }) => {
+      const [form, setForm] = useState({ name: '', email: '', address: '', city: '' });
+      const [payment, setPayment] = useState('');
+      const [submitting, setSubmitting] = useState(false);
+      const [success, setSuccess] = useState(false);
+      const panelRef = useRef(null);
+
+      const total = cartItems.reduce((s, i) => s + i.price, 0);
+
+      const handleSubmit = () => {
+        if (!form.name || !form.email || !form.address || !form.city || !payment) return;
+        setSubmitting(true);
+        setTimeout(() => { setSubmitting(false); setSuccess(true); }, 1500);
+      };
+
+      const FloatInput = ({ field, label, type = 'text' }) =>
+        React.createElement('div', { className: 'float-group' },
+          React.createElement('input', {
+            type, id: field, placeholder: ' ',
+            value: form[field],
+            onChange: e => setForm(f => ({ ...f, [field]: e.target.value })),
+            className: 'float-input',
+          }),
+          React.createElement('label', { htmlFor: field, className: 'float-label' }, label)
+        );
+
+      return React.createElement(React.Fragment, null,
+        // Overlay
+        React.createElement('div', {
+          className: 'overlay-enter',
+          onClick: onClose,
+          style: {
+            position: 'fixed', inset: 0, zIndex: 200,
+            backdropFilter: 'blur(12px) saturate(1.2)',
+            background: 'rgba(10,8,6,0.65)',
+          }
+        }),
+
+        // Panel
+        React.createElement('div', {
+          ref: panelRef,
+          className: 'panel-enter',
+          style: {
+            position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 201,
+            width: 'min(520px, 100vw)',
+            background: '#161412',
+            borderLeft: '1px solid rgba(255,255,255,0.05)',
+            display: 'flex', flexDirection: 'column',
+            overflowY: 'auto',
+          }
+        },
+          // Header
+          React.createElement('div', {
+            style: {
+              padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'sticky', top: 0, background: '#161412', zIndex: 2,
+            }
+          },
+            React.createElement('div', null,
+              React.createElement('p', { className: 'eyebrow', style: { marginBottom: '4px' } }, 'Checkout'),
+              React.createElement('h3', { style: { fontFamily: 'Playfair Display, serif', fontSize: '20px', fontWeight: '400', color: 'var(--cream)' } }, 'Complete your ritual')
+            ),
+            React.createElement('button', {
+              onClick: onClose,
+              style: {
+                background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)',
+                borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)',
+                transition: 'all 0.3s ease',
+              },
+              onMouseEnter: e => { e.currentTarget.style.borderColor = 'rgba(255,100,100,0.3)'; e.currentTarget.style.color = '#ff8080'; },
+              onMouseLeave: e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'var(--text-secondary)'; },
+            },
+              React.createElement(Icon, { name: 'x', size: 15 })
+            )
+          ),
+
+          success
+            ? // Success state
+              React.createElement('div', {
+                style: { flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '60px 32px', textAlign: 'center' }
+              },
+                React.createElement('div', {
+                  className: 'check-anim',
+                  style: {
+                    width: '80px', height: '80px', borderRadius: '50%',
+                    background: 'radial-gradient(ellipse, rgba(255,184,77,0.2) 0%, transparent 70%)',
+                    border: '1px solid rgba(255,184,77,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '32px',
+                  }
+                },
+                  React.createElement(Icon, { name: 'check', size: 28, color: 'var(--amber)' })
+                ),
+                React.createElement('h3', { style: { fontFamily: 'Playfair Display, serif', fontSize: '26px', color: 'var(--cream)', marginBottom: '12px' } }, 'Order Received'),
+                React.createElement('p', { style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.7', maxWidth: '280px' } },
+                  'Your fragrance journey begins. We\'ll be in touch shortly with your confirmation.'
+                ),
+                React.createElement('button', { className: 'btn-primary', style: { marginTop: '40px' }, onClick: onClose }, 'Continue Exploring')
+              )
+            : // Form
+              React.createElement('div', { style: { padding: '32px', flex: 1, display: 'flex', flexDirection: 'column', gap: '0' } },
+                // Cart items
+                React.createElement('div', { style: { marginBottom: '32px' } },
+                  React.createElement('p', { style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '16px' } }, `Your Selection (${cartItems.length})`),
+                  React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '10px' } },
+                    cartItems.map((item, i) =>
+                      React.createElement('div', {
+                        key: i,
+                        style: {
+                          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                          padding: '12px 14px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px',
+                          border: '1px solid rgba(255,255,255,0.04)',
+                        }
+                      },
+                        React.createElement('div', null,
+                          React.createElement('div', { style: { fontFamily: 'Playfair Display, serif', fontSize: '14px', color: 'var(--cream)' } }, item.name),
+                          React.createElement('div', { style: { fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' } }, item.notes)
+                        ),
+                        React.createElement('div', { style: { fontFamily: 'Playfair Display, serif', fontSize: '16px', color: 'var(--cream)' } },
+                          React.createElement('span', { style: { fontSize: '10px', color: 'var(--text-muted)', marginRight: '2px' } }, 'EGP'),
+                          item.price.toLocaleString()
+                        )
+                      )
+                    )
+                  ),
+                  cartItems.length > 0 && React.createElement('div', {
+                    style: {
+                      display: 'flex', justifyContent: 'space-between', marginTop: '12px',
+                      padding: '12px 14px', background: 'rgba(255,184,77,0.05)', borderRadius: '8px', border: '1px solid rgba(255,184,77,0.1)'
+                    }
+                  },
+                    React.createElement('span', { style: { fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-secondary)' } }, 'Total'),
+                    React.createElement('span', { style: { fontFamily: 'Playfair Display, serif', fontSize: '18px', color: 'var(--amber)' } },
+                      React.createElement('span', { style: { fontSize: '11px', color: 'var(--text-secondary)', marginRight: '3px' } }, 'EGP'),
+                      total.toLocaleString()
+                    )
+                  )
+                ),
+
+                // Divider
+                React.createElement('div', { className: 'divider-line', style: { marginBottom: '28px' } }),
+
+                // Form fields
+                React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '28px' } },
+                  React.createElement('p', { style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '4px' } }, 'Delivery Information'),
+                  React.createElement(FloatInput, { field: 'name', label: 'Full Name' }),
+                  React.createElement(FloatInput, { field: 'email', label: 'Email Address', type: 'email' }),
+                  React.createElement(FloatInput, { field: 'address', label: 'Detailed Address' }),
+                  React.createElement(FloatInput, { field: 'city', label: 'City' }),
+                ),
+
+                // Divider
+                React.createElement('div', { className: 'divider-line', style: { marginBottom: '28px' } }),
+
+                // Payment method
+                React.createElement('div', { style: { marginBottom: '36px' } },
+                  React.createElement('p', { style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '16px' } }, 'Payment Method'),
+                  React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '10px' } },
+                    PAYMENT_METHODS.map(method =>
+                      React.createElement('div', {
+                        key: method.id,
+                        className: `pay-card ${payment === method.id ? 'active' : ''}`,
+                        onClick: () => setPayment(method.id),
+                      },
+                        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 } },
+                          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px' } },
+                            React.createElement('span', { style: { fontSize: '22px' } }, method.icon),
+                            React.createElement('div', null,
+                              React.createElement('div', { style: { fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: '400', color: payment === method.id ? 'var(--cream)' : 'var(--text-secondary)' } }, method.label),
+                              React.createElement('div', { style: { fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' } }, method.sub)
+                            )
+                          ),
+                          React.createElement('div', {
+                            style: {
+                              width: '20px', height: '20px', borderRadius: '50%',
+                              border: payment === method.id ? '2px solid var(--amber)' : '1px solid rgba(255,255,255,0.1)',
+                              background: payment === method.id ? 'var(--amber)' : 'transparent',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                              flexShrink: 0,
+                            }
+                          },
+                            payment === method.id && React.createElement(Icon, { name: 'check', size: 11, color: '#1a1200', strokeWidth: 2.5 })
+                          )
+                        )
+                      )
+                    )
+                  )
+                ),
+
+                // Submit
+                React.createElement('button', {
+                  className: 'btn-primary',
+                  onClick: handleSubmit,
+                  style: {
+                    width: '100%', padding: '16px',
+                    opacity: (!form.name || !form.email || !form.address || !form.city || !payment || submitting) ? 0.4 : 1,
+                    cursor: (!form.name || !form.email || !form.address || !form.city || !payment) ? 'not-allowed' : 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+                    transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                    fontSize: '12px',
+                  },
+                  disabled: submitting
+                },
+                  submitting
+                    ? React.createElement(React.Fragment, null,
+                        React.createElement('div', { style: { width: '16px', height: '16px', border: '2px solid rgba(26,18,0,0.3)', borderTopColor: '#1a1200', borderRadius: '50%', animation: 'spin 0.8s linear infinite' } }),
+                        'Processing...'
+                      )
+                    : React.createElement(React.Fragment, null,
+                        React.createElement(Icon, { name: 'send', size: 15, color: '#1a1200' }),
+                        'Confirm Order'
+                      )
+                ),
+
+                React.createElement('p', {
+                  style: { textAlign: 'center', fontSize: '11px', color: 'var(--text-muted)', marginTop: '16px', letterSpacing: '0.05em' }
+                }, '🔒 Secure checkout — Your information is protected')
+              )
+        )
+      );
+    };
+
+    // ─── Toast ────────────────────────────────────────────────────────────────
+    const Toast = ({ message, visible }) =>
+      visible ? React.createElement('div', {
+        className: 'toast',
+        style: {
+          position: 'fixed', bottom: '32px', left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'rgba(255,184,77,0.12)', border: '1px solid rgba(255,184,77,0.25)',
+          borderRadius: '40px', padding: '12px 24px', zIndex: 300,
+          fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: 'var(--cream)',
+          backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', gap: '10px',
+          boxShadow: '0 8px 30px rgba(0,0,0,0.4)',
+        }
+      },
+        React.createElement(Icon, { name: 'check', size: 14, color: 'var(--amber)' }),
+        message
+      ) : null;
+
+    // ─── Footer ───────────────────────────────────────────────────────────────
+    const Footer = () => {
+      const socials = [
+        { name: 'TikTok', icon: 'music2', color: '#e9967a' },
+        { name: 'Instagram', icon: 'instagram', color: '#c084fc' },
+        { name: 'WhatsApp', icon: 'messageCircle', color: '#4ade80' },
+      ];
+      const [hovered, setHovered] = useState(null);
+
+      return React.createElement('footer', {
+        style: {
+          borderTop: '1px solid rgba(255,255,255,0.04)', padding: '48px 60px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px',
+          background: 'rgba(255,255,255,0.01)',
+        }
+      },
+        React.createElement('div', null,
+          React.createElement('div', {
+            style: { fontFamily: 'Playfair Display, serif', fontSize: '22px', fontWeight: '400', color: 'var(--cream)', letterSpacing: '0.1em', marginBottom: '6px' }
+          }, 'Velaluna'),
+          React.createElement('div', {
+            style: { fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-muted)' }
+          }, 'Luxury Scented Candles — Cairo, EG')
+        ),
+
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '20px' } },
+          socials.map(s =>
+            React.createElement('a', {
+              key: s.name, href: '#',
+              style: {
+                width: '40px', height: '40px', borderRadius: '50%',
+                background: hovered === s.name ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.03)',
+                border: `1px solid ${hovered === s.name ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)'}`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: hovered === s.name ? s.color : 'var(--text-muted)',
+                transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                transform: hovered === s.name ? 'translateY(-2px) scale(1.08)' : 'none',
+                textDecoration: 'none',
+              },
+              onMouseEnter: () => setHovered(s.name),
+              onMouseLeave: () => setHovered(null),
+              title: s.name,
+            },
+              React.createElement(Icon, { name: s.icon, size: 16 })
+            )
+          )
+        ),
+
+        React.createElement('div', {
+          style: { fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-muted)' }
+        },
+          React.createElement('span', { style: { color: 'rgba(255,255,255,0.15)', marginRight: '8px' } }, '©2024'),
+          'Web by ',
+          React.createElement('span', { style: { color: 'var(--cream)', fontWeight: '400' } }, 'Yassin')
+        )
+      );
+    };
+
+    // ─── Brand Story Strip ────────────────────────────────────────────────────
+    const BrandStory = () =>
+      React.createElement('section', { style: { padding: '120px 60px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' } },
+        React.createElement('div', null,
+          React.createElement('p', { className: 'eyebrow', style: { marginBottom: '20px' } }, 'The Philosophy'),
+          React.createElement('h2', {
+            style: { fontFamily: 'Playfair Display, serif', fontSize: 'clamp(28px, 3.5vw, 48px)', fontWeight: '400', color: 'var(--cream)', lineHeight: '1.2', marginBottom: '24px' }
+          }, React.createElement('span', { style: { fontStyle: 'italic' } }, '"Scent is the only sense that bypasses rational thought."')),
+          React.createElement('p', { style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '15px', lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '32px' } },
+            'Every Velaluna candle begins as an idea — a moment, a memory, an atmosphere. Our perfumers work in the tradition of Grasse, layering top, heart, and base notes with the patience of a sculptor.'
+          ),
+          React.createElement('div', { style: { display: 'flex', gap: '16px' } },
+            React.createElement('button', { className: 'btn-ghost' }, 'Read our Manifesto'),
+          )
+        ),
+        React.createElement('div', {
+          style: {
+            background: 'var(--bg-surface)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.04)',
+            padding: '48px', position: 'relative', overflow: 'hidden',
+          }
+        },
+          React.createElement('div', {
+            style: {
+              position: 'absolute', top: 0, right: 0, width: '200px', height: '200px',
+              background: 'radial-gradient(ellipse at 80% 20%, rgba(255,184,77,0.08) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }
+          }),
+          [
+            ['Hand-poured', 'Every candle is poured by hand in our Cairo atelier, in batches of no more than 24.'],
+            ['Natural wax blend', 'A proprietary blend of coconut and apricot wax burns cleanly with superior scent throw.'],
+            ['Refillable vessels', 'Our vessels are designed for life. Each can be cleaned and refilled — a ritual in itself.'],
+          ].map(([title, body], i) =>
+            React.createElement('div', {
+              key: i,
+              style: { marginBottom: i < 2 ? '32px' : '0', paddingBottom: i < 2 ? '32px' : '0', borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.04)' : 'none' }
+            },
+              React.createElement('div', { style: { fontFamily: 'Playfair Display, serif', fontSize: '17px', color: 'var(--cream)', marginBottom: '8px' } }, title),
+              React.createElement('div', { style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.7' } }, body)
+            )
+          )
+        )
+      );
+
+    // ─── App ─────────────────────────────────────────────────────────────────
+    const App = () => {
+      const [cartItems, setCartItems] = useState([]);
+      const [panelOpen, setPanelOpen] = useState(false);
+      const [toast, setToast] = useState({ visible: false, message: '' });
+
+      const showToast = (msg) => {
+        setToast({ visible: true, message: msg });
+        setTimeout(() => setToast({ visible: false, message: '' }), 3000);
+      };
+
+      const handleAddToCart = (product) => {
+        setCartItems(prev => [...prev, product]);
+        showToast(`${product.name} added to your cart`);
+      };
+
+      const scrollToProducts = () => {
+        document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      return React.createElement('div', { style: { minHeight: '100vh', background: 'var(--bg-base)' } },
+        React.createElement(Navbar, { cartCount: cartItems.length, onCartOpen: () => setPanelOpen(true) }),
+        React.createElement(Hero, { onShopClick: scrollToProducts }),
+        React.createElement(MarqueeBand),
+        React.createElement(ProductsSection, { onAddToCart: handleAddToCart }),
+        React.createElement('div', { className: 'divider-line', style: { margin: '0 60px' } }),
+        React.createElement(BrandStory),
+        React.createElement(Footer),
+
+        panelOpen && React.createElement(CheckoutPanel, {
+          cartItems,
+          onClose: () => setPanelOpen(false),
+        }),
+
+        React.createElement(Toast, { message: toast.message, visible: toast.visible }),
+
+        // Spin keyframe
+        React.createElement('style', null, `
+          @keyframes spin { to { transform: rotate(360deg); } }
+          @media (max-width: 768px) {
+            section { padding: 80px 24px !important; }
+            nav { padding: 16px 20px !important; }
+            footer { padding: 40px 24px !important; }
+            div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+          }
+        `)
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+  })();
+  </script>
+</body>
+</html>
