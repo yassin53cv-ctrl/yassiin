@@ -226,9 +226,47 @@ body {
   }
   .product-card-mobile { flex: 0 0 82vw; max-width: 340px; scroll-snap-align: start; }
 }
+/* ── Mobile orientation handling ── */
+/*
+  تم إلغاء Landscape lock على portrait حتى يظل الموقع معروضًا بشكل صحيح على الهاتف.
+  لو تحتاج قيد اتجاه محدد لاحقًا، نضيفه بعناية بدون قلب كامل للـ layout.
+*/
+
+
 @media (max-width: 768px) {
-  section  { padding: 80px 24px !important; }
-  nav      { padding: 16px 20px !important; }
-  footer   { padding: 40px 24px !important; }
-  div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+  section          { padding: 80px 24px !important; }
+  footer           { padding: 40px 24px !important; flex-direction: column; text-align: center; }
+  .brand-story-grid { grid-template-columns: 1fr !important; gap: 40px !important; padding: 80px 24px !important; }
+
+  nav              { padding: 14px 16px !important; }
+
+  /* Hide Contact text on mobile but keep cart icon */
+  .nav-contact-link { display: none !important; }
+
+  /* Ensure cart icon is visible on mobile (top-right) */
+  .nav-cart-btn {
+    display: flex !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  /* Improve mobile logo typography (no overlap, elegant spacing) */
+  .nav-brand {
+    text-align: center;
+    width: 100%;
+  }
+  .nav-brand span {
+    font-size: 16px !important;
+    letter-spacing: 0.18em !important;
+    display: inline-block !important;
+    transform: translateX(0) !important;
+  }
+
+  .panel-enter     { width: 100vw !important; }
+}
+@media (max-width: 480px) {
+  .nav-brand span {
+    font-size: 14px !important;
+    letter-spacing: 0.16em !important;
+  }
 }
