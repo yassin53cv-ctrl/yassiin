@@ -33,9 +33,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background-color: var(--bg-base);
       color: var(--text-primary);
@@ -45,32 +43,16 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-
-    ::selection {
-      background-color: rgba(255,184,77,0.25);
-      color: var(--cream);
-    }
-
-    /* Scrollbar styling */
+    ::selection { background-color: rgba(255,184,77,0.25); color: var(--cream); }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: rgba(255,184,77,0.3); border-radius: 2px; }
-
-    /* Hide scrollbar for carousel */
-    .carousel-scroll {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    .carousel-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     .carousel-scroll::-webkit-scrollbar { display: none; }
-
-    /* Typography */
     .font-serif { font-family: var(--font-serif); }
     .font-sans { font-family: var(--font-sans); }
-
-    /* Premium easing */
     .ease-premium { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
 
-    /* Candle glow animation */
     @keyframes breathe {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 0.65; transform: scale(1.08); }
@@ -92,10 +74,7 @@
       from { transform: translateX(0); opacity: 1; }
       to { transform: translateX(100%); opacity: 0; }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes shimmer {
       0% { background-position: -200% center; }
       100% { background-position: 200% center; }
@@ -104,12 +83,10 @@
     .candle-breathe { animation: breathe 4s ease-in-out infinite; }
     .candle-drift { animation: drift 6s ease-in-out infinite; }
     .candle-flicker { animation: flicker 2.5s ease-in-out infinite; }
-
     .panel-enter { animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .panel-exit { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 1, 1) forwards; }
     .overlay-enter { animation: fadeIn 0.3s ease forwards; }
 
-    /* Floating label inputs */
     .float-group { position: relative; }
     .float-input {
       width: 100%;
@@ -122,9 +99,7 @@
       padding: 20px 16px 8px;
       border-radius: 6px;
       outline: none;
-      transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  background 0.3s ease,
-                  box-shadow 0.3s ease;
+      transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, box-shadow 0.3s ease;
       letter-spacing: 0.01em;
     }
     .float-input:focus {
@@ -153,16 +128,13 @@
       color: var(--amber);
     }
 
-    /* Card hover effects */
     .product-card {
       position: relative;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 16px;
       overflow: hidden;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                  border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
     }
     .product-card::before {
@@ -181,7 +153,6 @@
     }
     .product-card:hover::before { opacity: 1; }
 
-    /* Nav */
     .nav-link {
       font-size: 11px;
       letter-spacing: 0.2em;
@@ -193,7 +164,6 @@
     }
     .nav-link:hover { color: var(--cream); }
 
-    /* Payment card */
     .pay-card {
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 10px;
@@ -212,11 +182,7 @@
       opacity: 0;
       transition: opacity 0.35s ease;
     }
-    .pay-card:hover {
-      border-color: rgba(255,184,77,0.2);
-      background: rgba(255,184,77,0.04);
-      transform: translateY(-1px);
-    }
+    .pay-card:hover { border-color: rgba(255,184,77,0.2); background: rgba(255,184,77,0.04); transform: translateY(-1px); }
     .pay-card.active {
       border-color: var(--amber);
       background: rgba(255,184,77,0.08);
@@ -225,7 +191,6 @@
     }
     .pay-card.active::after { opacity: 1; }
 
-    /* CTA Button */
     .btn-primary {
       background: linear-gradient(135deg, #ffb84d 0%, #f0a030 100%);
       color: #1a1200;
@@ -267,32 +232,12 @@
       cursor: pointer;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .btn-ghost:hover {
-      border-color: rgba(255,255,255,0.15);
-      color: var(--cream);
-      background: rgba(255,255,255,0.04);
-    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.15); color: var(--cream); background: rgba(255,255,255,0.04); }
 
-    /* Section spacing */
     .section { padding: 120px 0; }
+    .eyebrow { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--amber); font-family: var(--font-sans); font-weight: 400; }
+    .divider-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); }
 
-    /* Eyebrow label */
-    .eyebrow {
-      font-size: 10px;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--amber);
-      font-family: var(--font-sans);
-      font-weight: 400;
-    }
-
-    /* Divider */
-    .divider-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
-    }
-
-    /* Success state */
     @keyframes checkPop {
       0% { transform: scale(0) rotate(-10deg); opacity: 0; }
       60% { transform: scale(1.15) rotate(2deg); opacity: 1; }
@@ -300,7 +245,6 @@
     }
     .check-anim { animation: checkPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    /* Responsive grid */
     @media (min-width: 1024px) {
       .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     }
@@ -313,14 +257,9 @@
         padding-bottom: 16px;
         -webkit-overflow-scrolling: touch;
       }
-      .product-card-mobile {
-        flex: 0 0 82vw;
-        max-width: 340px;
-        scroll-snap-align: start;
-      }
+      .product-card-mobile { flex: 0 0 82vw; max-width: 340px; scroll-snap-align: start; }
     }
 
-    /* Noise texture overlay */
     .noise::after {
       content: '';
       position: fixed;
@@ -331,26 +270,49 @@
       opacity: 0.4;
     }
 
-    /* Marquee */
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .marquee-inner { animation: marquee 22s linear infinite; white-space: nowrap; display: flex; }
 
-    /* Toast */
     @keyframes toastIn {
       from { transform: translateY(20px) translateX(-50%); opacity: 0; }
       to { transform: translateY(0) translateX(-50%); opacity: 1; }
     }
     .toast { animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    /* Scroll indicator */
     @keyframes scrollPulse {
       0%, 100% { transform: translateY(0); opacity: 0.6; }
       50% { transform: translateY(6px); opacity: 1; }
     }
     .scroll-indicator { animation: scrollPulse 2s ease-in-out infinite; }
+
+    /* ── Transfer info box ── */
+    @keyframes revealBox {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .transfer-box {
+      animation: revealBox 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      background: rgba(230,0,0,0.07);
+      border: 1px solid rgba(230,0,0,0.2);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 10px;
+    }
+    .copy-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 6px 14px;
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: rgba(230,0,0,0.15); border-color: rgba(230,0,0,0.35); }
+    .copy-btn.copied { background: rgba(80,200,80,0.12); border-color: rgba(80,200,80,0.3); color: #6ee06e; }
   </style>
 </head>
 <body class="noise">
@@ -359,7 +321,6 @@
   <script>
   (() => {
     const { useState, useEffect, useRef, useCallback } = React;
-    const { motion, AnimatePresence, useInView, useScroll, useTransform } = window.MotionDom || window.Motion || {};
 
     // ─── Data ────────────────────────────────────────────────────────────────
     const PRODUCTS = [
@@ -408,12 +369,14 @@
     ];
 
     const PAYMENT_METHODS = [
-      { id: "vodafone", label: "Vodafone Cash", icon: "💳", sub: "Pay via mobile wallet" },
-      { id: "instapay", label: "InstaPay", icon: "⚡", sub: "Instant bank transfer" },
-      { id: "cod", label: "Cash on Delivery", icon: "📦", sub: "Pay when you receive" },
+      { id: "vodafone", label: "Vodafone Cash", sub: "Transfer to mobile wallet" },
+      { id: "instapay", label: "InstaPay", sub: "Instant bank transfer" },
+      { id: "cod", label: "Cash on Delivery", sub: "Pay when you receive" },
     ];
 
-    // ─── Icons (inline SVG via Lucide) ───────────────────────────────────────
+    const VODAFONE_NUMBER = "01105183936";
+
+    // ─── Icons ───────────────────────────────────────────────────────────────
     const Icon = ({ name, size = 18, color = "currentColor", strokeWidth = 1.5 }) => {
       const icons = {
         x: `<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>`,
@@ -429,6 +392,8 @@
         plus: `<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>`,
         chevronDown: `<polyline points="6 9 12 15 18 9"/>`,
         send: `<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>`,
+        copy: `<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>`,
+        phone: `<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.27 19.79 19.79 0 0 1 1.58 4.68 2 2 0 0 1 3.55 2.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6.09 6.09l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 17.4z"/>`,
       };
       return React.createElement('svg', {
         xmlns: "http://www.w3.org/2000/svg",
@@ -444,10 +409,49 @@
       });
     };
 
+    // ─── Payment Logos (inline SVG) ───────────────────────────────────────────
+    const VodafoneLogo = ({ size = 36 }) =>
+      React.createElement('svg', { width: size, height: size, viewBox: "0 0 100 100", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement('circle', { cx: "50", cy: "50", r: "48", fill: "#E60000" }),
+        React.createElement('path', {
+          d: "M50 22 C34 22 21 35 21 51 C21 63 28 73 38 78 L45 62 C41 60 38 56 38 51 C38 42 43 35 50 35 C57 35 62 42 62 51 C62 56 59 60 55 62 L62 78 C72 73 79 63 79 51 C79 35 66 22 50 22Z",
+          fill: "#FFFFFF"
+        })
+      );
+
+    // Accurate recreation of the real InstaPay Egypt logo:
+    // Teal rounded-square background with a white upward-right arrow made of
+    // a diagonal shaft + arrowhead, matching the actual app icon.
+    const InstaPayLogo = ({ size = 36 }) =>
+      React.createElement('svg', { width: size, height: size, viewBox: "0 0 100 100", xmlns: "http://www.w3.org/2000/svg" },
+        // Teal rounded background
+        React.createElement('rect', { width: "100", height: "100", rx: "22", fill: "#00BFA5" }),
+        // Subtle inner gradient shimmer
+        React.createElement('rect', { width: "100", height: "50", rx: "22", fill: "rgba(255,255,255,0.08)" }),
+        // Arrow shaft (diagonal line bottom-left to top-right)
+        React.createElement('line', { x1: "28", y1: "72", x2: "68", y2: "32", stroke: "#FFFFFF", strokeWidth: "11", strokeLinecap: "round" }),
+        // Arrowhead — horizontal bar at top-right
+        React.createElement('line', { x1: "44", y1: "30", x2: "70", y2: "30", stroke: "#FFFFFF", strokeWidth: "11", strokeLinecap: "round" }),
+        // Arrowhead — vertical bar at top-right
+        React.createElement('line', { x1: "70", y1: "30", x2: "70", y2: "56", stroke: "#FFFFFF", strokeWidth: "11", strokeLinecap: "round" })
+      );
+
+    const CODIcon = ({ size = 36 }) =>
+      React.createElement('div', {
+        style: {
+          width: size, height: size, borderRadius: '10px',
+          background: 'linear-gradient(135deg, #2a2a1a 0%, #3a3020 100%)',
+          border: '1px solid rgba(255,184,77,0.25)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0,
+        }
+      },
+        React.createElement(Icon, { name: 'shoppingBag', size: size * 0.5, color: '#ffb84d', strokeWidth: 1.5 })
+      );
+
     // ─── Candle SVG ───────────────────────────────────────────────────────────
     const CandleSVG = () => React.createElement('div', { className: 'candle-drift', style: { position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' } },
       React.createElement('svg', { viewBox: "0 0 160 280", xmlns: "http://www.w3.org/2000/svg", style: { width: '100%', height: '100%', maxHeight: '340px', filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.8))' } },
-        // flame glow
         React.createElement('defs', null,
           React.createElement('radialGradient', { id: 'flameGlow', cx: '50%', cy: '80%', r: '50%' },
             React.createElement('stop', { offset: '0%', stopColor: '#ffb84d', stopOpacity: '0.8' }),
@@ -466,33 +470,22 @@
             React.createElement('feGaussianBlur', { stdDeviation: '4' })
           )
         ),
-        // flame ambient
         React.createElement('ellipse', { cx: '80', cy: '38', rx: '22', ry: '28', fill: 'url(#flameGlow)', filter: 'url(#blur)', style: { animation: 'breathe 3s ease-in-out infinite' } }),
-        // label band
         React.createElement('rect', { x: '30', y: '90', width: '100', height: '140', rx: '6', fill: '#1a1410' }),
         React.createElement('rect', { x: '30', y: '90', width: '100', height: '140', rx: '6', fill: 'url(#bodyGrad)', opacity: '0.6' }),
-        // wax body
         React.createElement('rect', { x: '32', y: '60', width: '96', height: '170', rx: '8', fill: 'url(#bodyGrad)' }),
         React.createElement('rect', { x: '32', y: '60', width: '96', height: '170', rx: '8', fill: 'none', stroke: 'rgba(255,220,150,0.08)', strokeWidth: '1' }),
-        // top wax pool
         React.createElement('ellipse', { cx: '80', cy: '62', rx: '48', ry: '10', fill: '#2a2018' }),
         React.createElement('ellipse', { cx: '80', cy: '62', rx: '30', ry: '5', fill: '#3d2f20', opacity: '0.7' }),
-        // label text area
         React.createElement('rect', { x: '42', y: '110', width: '76', height: '80', rx: '4', fill: 'rgba(255,245,230,0.04)', stroke: 'rgba(255,220,150,0.1)', strokeWidth: '0.5' }),
-        // V text
         React.createElement('text', { x: '80', y: '145', textAnchor: 'middle', fontFamily: 'Playfair Display, serif', fontSize: '22', fontWeight: '400', fill: 'rgba(255,235,200,0.7)', letterSpacing: '2' }, 'V'),
         React.createElement('text', { x: '80', y: '162', textAnchor: 'middle', fontFamily: 'DM Sans, sans-serif', fontSize: '6.5', fontWeight: '300', fill: 'rgba(255,235,200,0.4)', letterSpacing: '5' }, 'VELALUNA'),
         React.createElement('text', { x: '80', y: '178', textAnchor: 'middle', fontFamily: 'DM Sans, sans-serif', fontSize: '5', fontWeight: '300', fill: 'rgba(255,200,100,0.35)', letterSpacing: '2' }, 'LUXURY SCENTED'),
-        // base / jar bottom
         React.createElement('rect', { x: '26', y: '228', width: '108', height: '14', rx: '4', fill: '#111009' }),
         React.createElement('rect', { x: '20', y: '240', width: '120', height: '8', rx: '4', fill: '#0d0c08' }),
-        // highlight
         React.createElement('rect', { x: '36', y: '65', width: '6', height: '150', rx: '3', fill: 'rgba(255,240,200,0.05)' }),
-        // wick
         React.createElement('line', { x1: '80', y1: '55', x2: '80', y2: '65', stroke: '#3a2a10', strokeWidth: '1.5', strokeLinecap: 'round' }),
-        // flame outer
         React.createElement('ellipse', { cx: '80', cy: '38', rx: '9', ry: '18', fill: 'url(#flameInner)', style: { animation: 'flicker 2.5s ease-in-out infinite', transformOrigin: '80px 55px' } }),
-        // flame core
         React.createElement('ellipse', { cx: '80', cy: '42', rx: '4', ry: '8', fill: '#fff8e7', opacity: '0.9', style: { animation: 'flicker 2s ease-in-out infinite 0.3s', transformOrigin: '80px 55px' } }),
       )
     );
@@ -517,19 +510,16 @@
           borderBottom: scrolled ? '1px solid rgba(255,255,255,0.04)' : '1px solid transparent',
         }
       },
-        // Left nav links
         React.createElement('div', { style: { display: 'flex', gap: '32px' } },
           ['Collection', 'About', 'Ritual'].map(l =>
             React.createElement('a', { key: l, href: '#', className: 'nav-link' }, l)
           )
         ),
-        // Logo
         React.createElement('div', { style: { position: 'absolute', left: '50%', transform: 'translateX(-50%)' } },
           React.createElement('span', {
-            style: { fontFamily: 'Playfair Display, serif', fontSize: '18px', fontWeight: '400', letterSpacing: '0.15em', color: 'var(--cream)', textDecoration: 'none' }
+            style: { fontFamily: 'Playfair Display, serif', fontSize: '18px', fontWeight: '400', letterSpacing: '0.15em', color: 'var(--cream)' }
           }, 'Velaluna')
         ),
-        // Right
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '24px' } },
           React.createElement('a', { href: '#', className: 'nav-link' }, 'Contact'),
           React.createElement('button', {
@@ -575,7 +565,6 @@
           padding: '0 60px', gap: '40px',
         }
       },
-        // Background glow
         React.createElement('div', {
           className: 'candle-breathe',
           style: {
@@ -585,7 +574,6 @@
             filter: 'blur(60px)', pointerEvents: 'none', zIndex: 0,
           }
         }),
-        // Second ambient glow
         React.createElement('div', {
           style: {
             position: 'absolute', bottom: '10%', left: '10%',
@@ -595,12 +583,8 @@
             animation: 'breathe 6s ease-in-out infinite 2s'
           }
         }),
-
-        // Left column — text
         React.createElement('div', { style: { position: 'relative', zIndex: 1, paddingTop: '80px' } },
-          React.createElement('p', { className: 'eyebrow', style: { marginBottom: '24px', opacity: visible.length > 0 ? 1 : 0, transition: 'opacity 0.6s ease', transitionDelay: '0s' } },
-            'Est. Cairo, 2024'
-          ),
+          React.createElement('p', { className: 'eyebrow', style: { marginBottom: '24px', opacity: visible.length > 0 ? 1 : 0, transition: 'opacity 0.6s ease' } }, 'Est. Cairo, 2024'),
           React.createElement('h1', {
             style: {
               fontFamily: 'Playfair Display, serif', fontSize: 'clamp(36px, 5vw, 72px)',
@@ -631,9 +615,7 @@
               transform: visible.length >= words.length ? 'translateY(0)' : 'translateY(16px)',
               transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
             }
-          },
-            'Hand-poured in small batches. Each fragrance is an architecture — a deliberate sequence of notes designed to transform the air around you.'
-          ),
+          }, 'Hand-poured in small batches. Each fragrance is an architecture — a deliberate sequence of notes designed to transform the air around you.'),
           React.createElement('div', {
             style: {
               display: 'flex', gap: '16px', alignItems: 'center',
@@ -641,14 +623,9 @@
               transition: 'opacity 1s ease 0.8s',
             }
           },
-            React.createElement('button', {
-              className: 'btn-primary',
-              onClick: onShopClick,
-            }, 'Explore the Collection'),
+            React.createElement('button', { className: 'btn-primary', onClick: onShopClick }, 'Explore the Collection'),
             React.createElement('button', { className: 'btn-ghost' }, 'Our Story')
           ),
-
-          // Stats
           React.createElement('div', {
             style: {
               display: 'flex', gap: '40px', marginTop: '64px', paddingTop: '40px',
@@ -659,18 +636,12 @@
           },
             [['03', 'Fragrances'], ['100%', 'Natural Wax'], ['55+', 'Burn Hours']].map(([n, l]) =>
               React.createElement('div', { key: l },
-                React.createElement('div', {
-                  style: { fontFamily: 'Playfair Display, serif', fontSize: '28px', fontWeight: '400', color: 'var(--cream)', letterSpacing: '-0.02em' }
-                }, n),
-                React.createElement('div', {
-                  style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginTop: '4px' }
-                }, l)
+                React.createElement('div', { style: { fontFamily: 'Playfair Display, serif', fontSize: '28px', fontWeight: '400', color: 'var(--cream)', letterSpacing: '-0.02em' } }, n),
+                React.createElement('div', { style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginTop: '4px' } }, l)
               )
             )
           )
         ),
-
-        // Right column — candle
         React.createElement('div', {
           style: {
             position: 'relative', zIndex: 1, height: '560px',
@@ -679,7 +650,6 @@
             transition: 'opacity 1s ease 0.5s',
           }
         },
-          // Circular glow behind candle
           React.createElement('div', {
             className: 'candle-breathe',
             style: {
@@ -692,7 +662,6 @@
           React.createElement('div', { style: { width: '220px', height: '380px', position: 'relative', zIndex: 1 } },
             React.createElement(CandleSVG)
           ),
-          // Scroll indicator
           React.createElement('div', {
             className: 'scroll-indicator',
             style: {
@@ -704,13 +673,7 @@
             React.createElement(Icon, { name: 'chevronDown', size: 16 })
           )
         ),
-
-        // Mobile layout override
-        React.createElement('style', null, `
-          @media (max-width: 768px) {
-            section:first-of-type { grid-template-columns: 1fr !important; padding: 80px 24px 40px !important; }
-          }
-        `)
+        React.createElement('style', null, `@media (max-width: 768px) { section:first-of-type { grid-template-columns: 1fr !important; padding: 80px 24px 40px !important; } }`)
       );
     };
 
@@ -727,9 +690,7 @@
         React.createElement('div', { className: 'marquee-inner' },
           repeated.map((item, i) =>
             React.createElement('span', { key: i, style: { display: 'inline-flex', alignItems: 'center', gap: '20px', padding: '0 20px' } },
-              React.createElement('span', {
-                style: { fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontSize: '14px', color: 'var(--text-muted)', letterSpacing: '0.05em', whiteSpace: 'nowrap' }
-              }, item),
+              React.createElement('span', { style: { fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontSize: '14px', color: 'var(--text-muted)', letterSpacing: '0.05em', whiteSpace: 'nowrap' } }, item),
               React.createElement('span', { style: { color: 'rgba(255,184,77,0.4)', fontSize: '10px' } }, '✦')
             )
           )
@@ -754,7 +715,6 @@
         onMouseLeave: () => setHovered(false),
         style: { minHeight: '480px', display: 'flex', flexDirection: 'column' }
       },
-        // Inner glow accent
         React.createElement('div', {
           style: {
             position: 'absolute', inset: 0, borderRadius: '16px',
@@ -762,8 +722,6 @@
             opacity: hovered ? 1 : 0.4, transition: 'opacity 0.5s ease', pointerEvents: 'none'
           }
         }),
-
-        // Top — candle visual area
         React.createElement('div', {
           style: {
             height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -771,7 +729,6 @@
             borderBottom: '1px solid rgba(255,255,255,0.04)',
           }
         },
-          // Ambient glow
           React.createElement('div', {
             style: {
               position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
@@ -780,10 +737,7 @@
               filter: 'blur(20px)', animation: 'breathe 4s ease-in-out infinite',
             }
           }),
-          React.createElement('div', { style: { width: '90px', height: '160px', position: 'relative', zIndex: 1 } },
-            React.createElement(CandleSVG)
-          ),
-          // Badge
+          React.createElement('div', { style: { width: '90px', height: '160px', position: 'relative', zIndex: 1 } }, React.createElement(CandleSVG)),
           React.createElement('div', {
             style: {
               position: 'absolute', top: '16px', right: '16px',
@@ -794,12 +748,8 @@
             }
           }, product.badge)
         ),
-
-        // Content
         React.createElement('div', { style: { padding: '28px 28px 0', flex: 1, display: 'flex', flexDirection: 'column' } },
-          React.createElement('p', { style: { fontSize: '11px', letterSpacing: '0.15em', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px', fontFamily: 'DM Sans, sans-serif' } },
-            product.notes
-          ),
+          React.createElement('p', { style: { fontSize: '11px', letterSpacing: '0.15em', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px', fontFamily: 'DM Sans, sans-serif' } }, product.notes),
           React.createElement('h3', {
             style: {
               fontFamily: 'Playfair Display, serif', fontSize: '22px', fontWeight: '400',
@@ -808,18 +758,10 @@
               transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
             }
           }, product.name),
-          React.createElement('p', {
-            style: { fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontSize: '13px', color: 'var(--text-muted)', marginBottom: '16px' }
-          }, product.arabic),
-          React.createElement('p', {
-            style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '13px', lineHeight: '1.7', color: 'var(--text-secondary)', marginBottom: '24px', flex: 1 }
-          }, product.desc),
-
-          // Meta details
-          React.createElement('div', {
-            style: { display: 'flex', gap: '16px', marginBottom: '24px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.04)' }
-          },
-            [[Icon, 'flame', product.burnTime], [Icon, 'sparkles', product.weight]].map(([Ico, ico, val], i) =>
+          React.createElement('p', { style: { fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontSize: '13px', color: 'var(--text-muted)', marginBottom: '16px' } }, product.arabic),
+          React.createElement('p', { style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '13px', lineHeight: '1.7', color: 'var(--text-secondary)', marginBottom: '24px', flex: 1 } }, product.desc),
+          React.createElement('div', { style: { display: 'flex', gap: '16px', marginBottom: '24px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.04)' } },
+            [['flame', product.burnTime], ['sparkles', product.weight]].map(([ico, val], i) =>
               React.createElement('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: '6px' } },
                 React.createElement(Icon, { name: ico, size: 13, color: 'var(--text-muted)' }),
                 React.createElement('span', { style: { fontSize: '11px', color: 'var(--text-muted)', letterSpacing: '0.08em' } }, val)
@@ -827,11 +769,7 @@
             )
           )
         ),
-
-        // Footer
-        React.createElement('div', {
-          style: { padding: '0 28px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
-        },
+        React.createElement('div', { style: { padding: '0 28px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' } },
           React.createElement('div', null,
             React.createElement('div', { style: { fontSize: '10px', letterSpacing: '0.15em', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' } }, 'Price'),
             React.createElement('div', { style: { fontFamily: 'Playfair Display, serif', fontSize: '26px', fontWeight: '400', color: 'var(--cream)' } },
@@ -871,20 +809,13 @@
       }, []);
 
       return React.createElement('section', { id: 'collection', className: 'section', style: { padding: '120px 60px' } },
-        // Header
         React.createElement('div', { style: { marginBottom: '64px' } },
           React.createElement('p', { className: 'eyebrow', style: { marginBottom: '16px' } }, 'The Collection'),
           React.createElement('div', { style: { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' } },
-            React.createElement('h2', {
-              style: { fontFamily: 'Playfair Display, serif', fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: '400', color: 'var(--cream)', lineHeight: '1.1', maxWidth: '500px' }
-            }, 'Three Candles. Three Worlds.'),
-            React.createElement('p', {
-              style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '14px', color: 'var(--text-secondary)', maxWidth: '320px', lineHeight: '1.7', textAlign: 'right' }
-            }, 'Each fragrance is developed over months — hand-poured in small batches, never mass-produced.')
+            React.createElement('h2', { style: { fontFamily: 'Playfair Display, serif', fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: '400', color: 'var(--cream)', lineHeight: '1.1', maxWidth: '500px' } }, 'Three Candles. Three Worlds.'),
+            React.createElement('p', { style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '14px', color: 'var(--text-secondary)', maxWidth: '320px', lineHeight: '1.7', textAlign: 'right' } }, 'Each fragrance is developed over months — hand-poured in small batches, never mass-produced.')
           )
         ),
-
-        // Cards
         isMobile
           ? React.createElement('div', { className: 'product-grid-mobile carousel-scroll', style: { paddingBottom: '8px' } },
               PRODUCTS.map(p => React.createElement(ProductCard, { key: p.id, product: p, onAddToCart, isMobile: true }))
@@ -892,20 +823,69 @@
           : React.createElement('div', { className: 'product-grid' },
               PRODUCTS.map(p => React.createElement(ProductCard, { key: p.id, product: p, onAddToCart, isMobile: false }))
             ),
+        isMobile && React.createElement('p', { style: { textAlign: 'center', marginTop: '20px', fontSize: '11px', letterSpacing: '0.15em', color: 'var(--text-muted)', textTransform: 'uppercase' } }, '← Swipe to explore →')
+      );
+    };
 
-        isMobile && React.createElement('p', {
-          style: { textAlign: 'center', marginTop: '20px', fontSize: '11px', letterSpacing: '0.15em', color: 'var(--text-muted)', textTransform: 'uppercase' }
-        }, '← Swipe to explore →')
+    // ─── Vodafone Transfer Box ────────────────────────────────────────────────
+    const VodafoneTransferBox = () => {
+      const [copied, setCopied] = useState(false);
+
+      const handleCopy = () => {
+        navigator.clipboard.writeText(VODAFONE_NUMBER).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        });
+      };
+
+      return React.createElement('div', { className: 'transfer-box' },
+        React.createElement('div', {
+          style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }
+        },
+          React.createElement(VodafoneLogo, { size: 22 }),
+          React.createElement('span', {
+            style: { fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#ff6060', fontFamily: 'DM Sans, sans-serif', fontWeight: '500' }
+          }, 'Transfer to this number')
+        ),
+        React.createElement('div', {
+          style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }
+        },
+          React.createElement('div', null,
+            React.createElement('div', {
+              style: {
+                fontFamily: 'Playfair Display, serif', fontSize: '22px', fontWeight: '400',
+                color: 'var(--cream)', letterSpacing: '0.06em',
+              }
+            }, VODAFONE_NUMBER),
+            React.createElement('div', {
+              style: { fontSize: '11px', color: 'var(--text-muted)', marginTop: '3px', letterSpacing: '0.05em' }
+            }, 'Vodafone Cash wallet')
+          ),
+          React.createElement('button', {
+            className: `copy-btn ${copied ? 'copied' : ''}`,
+            onClick: handleCopy,
+          },
+            copied
+              ? React.createElement(React.Fragment, null, React.createElement(Icon, { name: 'check', size: 12, color: '#6ee06e' }), ' Copied!')
+              : React.createElement(React.Fragment, null, React.createElement(Icon, { name: 'copy', size: 12, color: 'var(--cream)' }), ' Copy')
+          )
+        ),
+        React.createElement('p', {
+          style: {
+            marginTop: '12px', paddingTop: '12px',
+            borderTop: '1px solid rgba(230,0,0,0.15)',
+            fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.6', letterSpacing: '0.03em'
+          }
+        }, 'After sending, enter your transaction reference in the notes field above so we can confirm your order.')
       );
     };
 
     // ─── Checkout Panel ───────────────────────────────────────────────────────
     const CheckoutPanel = ({ cartItems, onClose }) => {
-      const [form, setForm] = useState({ name: '', email: '', address: '', city: '' });
+      const [form, setForm] = useState({ name: '', email: '', address: '', city: '', notes: '' });
       const [payment, setPayment] = useState('');
       const [submitting, setSubmitting] = useState(false);
       const [success, setSuccess] = useState(false);
-      const panelRef = useRef(null);
 
       const total = cartItems.reduce((s, i) => s + i.price, 0);
 
@@ -915,19 +895,33 @@
         setTimeout(() => { setSubmitting(false); setSuccess(true); }, 1500);
       };
 
-      const FloatInput = ({ field, label, type = 'text' }) =>
+      const FloatInput = ({ field, label, type = 'text', multiline = false }) =>
         React.createElement('div', { className: 'float-group' },
-          React.createElement('input', {
-            type, id: field, placeholder: ' ',
-            value: form[field],
-            onChange: e => setForm(f => ({ ...f, [field]: e.target.value })),
-            className: 'float-input',
-          }),
+          multiline
+            ? React.createElement('textarea', {
+                id: field, placeholder: ' ',
+                value: form[field],
+                onChange: e => setForm(f => ({ ...f, [field]: e.target.value })),
+                className: 'float-input',
+                rows: 2,
+                style: { resize: 'none', minHeight: '64px' },
+              })
+            : React.createElement('input', {
+                type, id: field, placeholder: ' ',
+                value: form[field],
+                onChange: e => setForm(f => ({ ...f, [field]: e.target.value })),
+                className: 'float-input',
+              }),
           React.createElement('label', { htmlFor: field, className: 'float-label' }, label)
         );
 
+      const getPaymentIcon = (id) => {
+        if (id === 'vodafone') return React.createElement(VodafoneLogo, { size: 36 });
+        if (id === 'instapay') return React.createElement(InstaPayLogo, { size: 36 });
+        return React.createElement(CODIcon, { size: 36 });
+      };
+
       return React.createElement(React.Fragment, null,
-        // Overlay
         React.createElement('div', {
           className: 'overlay-enter',
           onClick: onClose,
@@ -937,10 +931,7 @@
             background: 'rgba(10,8,6,0.65)',
           }
         }),
-
-        // Panel
         React.createElement('div', {
-          ref: panelRef,
           className: 'panel-enter',
           style: {
             position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 201,
@@ -978,8 +969,7 @@
           ),
 
           success
-            ? // Success state
-              React.createElement('div', {
+            ? React.createElement('div', {
                 style: { flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '60px 32px', textAlign: 'center' }
               },
                 React.createElement('div', {
@@ -995,12 +985,11 @@
                 ),
                 React.createElement('h3', { style: { fontFamily: 'Playfair Display, serif', fontSize: '26px', color: 'var(--cream)', marginBottom: '12px' } }, 'Order Received'),
                 React.createElement('p', { style: { fontFamily: 'DM Sans, sans-serif', fontWeight: '300', fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.7', maxWidth: '280px' } },
-                  'Your fragrance journey begins. We\'ll be in touch shortly with your confirmation.'
+                  "Your fragrance journey begins. We'll be in touch shortly with your confirmation."
                 ),
                 React.createElement('button', { className: 'btn-primary', style: { marginTop: '40px' }, onClick: onClose }, 'Continue Exploring')
               )
-            : // Form
-              React.createElement('div', { style: { padding: '32px', flex: 1, display: 'flex', flexDirection: 'column', gap: '0' } },
+            : React.createElement('div', { style: { padding: '32px', flex: 1, display: 'flex', flexDirection: 'column' } },
                 // Cart items
                 React.createElement('div', { style: { marginBottom: '32px' } },
                   React.createElement('p', { style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '16px' } }, `Your Selection (${cartItems.length})`),
@@ -1039,7 +1028,6 @@
                   )
                 ),
 
-                // Divider
                 React.createElement('div', { className: 'divider-line', style: { marginBottom: '28px' } }),
 
                 // Form fields
@@ -1051,44 +1039,54 @@
                   React.createElement(FloatInput, { field: 'city', label: 'City' }),
                 ),
 
-                // Divider
                 React.createElement('div', { className: 'divider-line', style: { marginBottom: '28px' } }),
 
                 // Payment method
-                React.createElement('div', { style: { marginBottom: '36px' } },
+                React.createElement('div', { style: { marginBottom: '28px' } },
                   React.createElement('p', { style: { fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '16px' } }, 'Payment Method'),
                   React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '10px' } },
                     PAYMENT_METHODS.map(method =>
-                      React.createElement('div', {
-                        key: method.id,
-                        className: `pay-card ${payment === method.id ? 'active' : ''}`,
-                        onClick: () => setPayment(method.id),
-                      },
-                        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 } },
-                          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px' } },
-                            React.createElement('span', { style: { fontSize: '22px' } }, method.icon),
-                            React.createElement('div', null,
-                              React.createElement('div', { style: { fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: '400', color: payment === method.id ? 'var(--cream)' : 'var(--text-secondary)' } }, method.label),
-                              React.createElement('div', { style: { fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' } }, method.sub)
+                      React.createElement(React.Fragment, { key: method.id },
+                        React.createElement('div', {
+                          className: `pay-card ${payment === method.id ? 'active' : ''}`,
+                          onClick: () => setPayment(method.id),
+                        },
+                          React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 } },
+                            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px' } },
+                              getPaymentIcon(method.id),
+                              React.createElement('div', null,
+                                React.createElement('div', { style: { fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: '400', color: payment === method.id ? 'var(--cream)' : 'var(--text-secondary)' } }, method.label),
+                                React.createElement('div', { style: { fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' } }, method.sub)
+                              )
+                            ),
+                            React.createElement('div', {
+                              style: {
+                                width: '20px', height: '20px', borderRadius: '50%',
+                                border: payment === method.id ? '2px solid var(--amber)' : '1px solid rgba(255,255,255,0.1)',
+                                background: payment === method.id ? 'var(--amber)' : 'transparent',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                                flexShrink: 0,
+                              }
+                            },
+                              payment === method.id && React.createElement(Icon, { name: 'check', size: 11, color: '#1a1200', strokeWidth: 2.5 })
                             )
-                          ),
-                          React.createElement('div', {
-                            style: {
-                              width: '20px', height: '20px', borderRadius: '50%',
-                              border: payment === method.id ? '2px solid var(--amber)' : '1px solid rgba(255,255,255,0.1)',
-                              background: payment === method.id ? 'var(--amber)' : 'transparent',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center',
-                              transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-                              flexShrink: 0,
-                            }
-                          },
-                            payment === method.id && React.createElement(Icon, { name: 'check', size: 11, color: '#1a1200', strokeWidth: 2.5 })
                           )
-                        )
+                        ),
+                        // Transfer info box — shown only when Vodafone is selected
+                        method.id === 'vodafone' && payment === 'vodafone' &&
+                          React.createElement(VodafoneTransferBox)
                       )
                     )
                   )
                 ),
+
+                // Notes field — shown when Vodafone is selected
+                payment === 'vodafone' && React.createElement('div', { style: { marginBottom: '28px' } },
+                  React.createElement(FloatInput, { field: 'notes', label: 'Transaction reference / notes', multiline: true })
+                ),
+
+                React.createElement('div', { className: 'divider-line', style: { marginBottom: '24px' } }),
 
                 // Submit
                 React.createElement('button', {
@@ -1158,14 +1156,9 @@
         }
       },
         React.createElement('div', null,
-          React.createElement('div', {
-            style: { fontFamily: 'Playfair Display, serif', fontSize: '22px', fontWeight: '400', color: 'var(--cream)', letterSpacing: '0.1em', marginBottom: '6px' }
-          }, 'Velaluna'),
-          React.createElement('div', {
-            style: { fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-muted)' }
-          }, 'Luxury Scented Candles — Cairo, EG')
+          React.createElement('div', { style: { fontFamily: 'Playfair Display, serif', fontSize: '22px', fontWeight: '400', color: 'var(--cream)', letterSpacing: '0.1em', marginBottom: '6px' } }, 'Velaluna'),
+          React.createElement('div', { style: { fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-muted)' } }, 'Luxury Scented Candles — Cairo, EG')
         ),
-
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '20px' } },
           socials.map(s =>
             React.createElement('a', {
@@ -1188,10 +1181,7 @@
             )
           )
         ),
-
-        React.createElement('div', {
-          style: { fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-muted)' }
-        },
+        React.createElement('div', { style: { fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--text-muted)' } },
           React.createElement('span', { style: { color: 'rgba(255,255,255,0.15)', marginRight: '8px' } }, '©2024'),
           'Web by ',
           React.createElement('span', { style: { color: 'var(--cream)', fontWeight: '400' } }, 'Yassin')
@@ -1199,7 +1189,7 @@
       );
     };
 
-    // ─── Brand Story Strip ────────────────────────────────────────────────────
+    // ─── Brand Story ──────────────────────────────────────────────────────────
     const BrandStory = () =>
       React.createElement('section', { style: { padding: '120px 60px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' } },
         React.createElement('div', null,
@@ -1211,7 +1201,7 @@
             'Every Velaluna candle begins as an idea — a moment, a memory, an atmosphere. Our perfumers work in the tradition of Grasse, layering top, heart, and base notes with the patience of a sculptor.'
           ),
           React.createElement('div', { style: { display: 'flex', gap: '16px' } },
-            React.createElement('button', { className: 'btn-ghost' }, 'Read our Manifesto'),
+            React.createElement('button', { className: 'btn-ghost' }, 'Read our Manifesto')
           )
         ),
         React.createElement('div', {
@@ -1271,15 +1261,8 @@
         React.createElement('div', { className: 'divider-line', style: { margin: '0 60px' } }),
         React.createElement(BrandStory),
         React.createElement(Footer),
-
-        panelOpen && React.createElement(CheckoutPanel, {
-          cartItems,
-          onClose: () => setPanelOpen(false),
-        }),
-
+        panelOpen && React.createElement(CheckoutPanel, { cartItems, onClose: () => setPanelOpen(false) }),
         React.createElement(Toast, { message: toast.message, visible: toast.visible }),
-
-        // Spin keyframe
         React.createElement('style', null, `
           @keyframes spin { to { transform: rotate(360deg); } }
           @media (max-width: 768px) {
